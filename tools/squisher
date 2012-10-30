@@ -38,6 +38,10 @@ fi
 OPTICHARGER=$ANDROID_BUILD_TOP/vendor/cm/tools/opticharger
 QUIET=-q
 DELETE_BINS="applypatch applypatch_static check_prereq recovery updater"
+DELETE_APKS="Trebuchet.apk VideoEditor.apk CMWallpapers.apk LiveWallpapers.apk VoiceDialer.apk SoundRecorder.apk 
+VisualizationWallpapers.apk "
+DELETE_FONTS="DroidNaskh-Regular.ttf DroidSansFallback.ttf DroidSansEthiopic-Regular.ttf Lohit-Bengali.ttf Lohit-Devanagari.ttf 
+Lohit-Tamil.ttf "
 
 REPACK=$OUT/repack.d
 printf "Sanitizing environment..."
@@ -69,6 +73,46 @@ $SED -i \
 # Delete unnecessary binaries
 ( cd $REPACK/ota/system/bin; echo $DELETE_BINS | xargs rm -f; )
 
+# Delete unnecessary Apk
+( cd $REPACK/ota/system/app; echo $DELETE_APKS | xargs rm -f; )
+
+# Delete unnecessary Fonts
+( cd $REPACK/ota/system/fonts; echo $DELETE_FONTS | xargs rm -f; )
+
+#Copy droidfallback
+cp $ANDROID_BUILD_TOP/vendor/cm/prebuilt/common/fonts/DroidSansFallback.ttf $REPACK/ota/system/fonts/DroidSansFallback.ttf
+
+#remove cm bootanimation and replace with slim
+rm -rf $REPACK/ota/system/media/bootanimation.zip
+cp $ANDROID_BUILD_TOP/vendor/cm/prebuilt/common/media/bootanimation.zip $REPACK/ota/system/media/bootanimation.zip
+
+# No need for media/audio
+rm -rf $REPACK/ota/system/media/audio
+
+#re create folders for audio
+mkdir -p $REPACK/ota/system/media/audio
+mkdir -p $REPACK/ota/system/media/audio/alarms
+mkdir -p $REPACK/ota/system/media/audio/notifications
+mkdir -p $REPACK/ota/system/media/audio/ringtones
+mkdir -p $REPACK/ota/system/media/audio/ui
+
+#copy new audio files
+cp -rf $ANDROID_BUILD_TOP/vendor/cm/prebuilt/common/media/audio/alarms/* $REPACK/ota/system/media/audio/alarms/
+cp -rf $ANDROID_BUILD_TOP/vendor/cm/prebuilt/common/media/audio/notifications/* $REPACK/ota/system/media/audio/notifications/
+cp -rf $ANDROID_BUILD_TOP/vendor/cm/prebuilt/common/media/audio/ringtones/* $REPACK/ota/system/media/audio/ringtones/
+cp -rf $ANDROID_BUILD_TOP/vendor/cm/prebuilt/common/media/audio/ui/* $REPACK/ota/system/media/audio/ui/
+
+# No need for media/video
+rm -rf $REPACK/ota/system/media/video
+rm $REPACK/ota/system/media/LMprec_508.emd
+rm $REPACK/ota/system/media/PFFprec_600.emd
+
+# No need for tts
+rm -rf $REPACK/ota/system/tts
+
+# No need for srec
+rm -rf $REPACK/ota/system/usr/srec
+
 # No need for recovery
 rm -rf $REPACK/ota/recovery
 
@@ -78,7 +122,7 @@ rm -rf $REPACK/ota/recovery
 
 # Determine what to name the new signed package
 MODVERSION=`sed -n -e'/ro\.cm\.version/s/^.*=//p' $REPACK/ota/system/build.prop`
-OUTFILE=$OUT/cm-$MODVERSION.zip
+OUTFILE=$OUT/slim-$MODVERSION.zip
 echo MODVERSION: $MODVERSION
 
 # Pack it up and sign
