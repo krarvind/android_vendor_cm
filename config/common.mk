@@ -50,11 +50,33 @@ PRODUCT_COPY_FILES += \
     vendor/cm/prebuilt/common/bin/compcache:system/bin/compcache \
     vendor/cm/prebuilt/common/bin/handle_compcache:system/bin/handle_compcache
 
-PRODUCT_COPY_FILES +=  \
+#PRODUCT_COPY_FILES +=  \
    # vendor/cm/proprietary/RomManager.apk:system/app/RomManager.apk \
    # vendor/cm/proprietary/Term.apk:system/app/Term.apk \
    # vendor/cm/proprietary/lib/armeabi/libjackpal-androidterm4.so:system/lib/libjackpal-androidterm4.so \
-	vendor/cm/prebuilt/common/apps/Superuser.apk:system/app/Superuser.apk
+   # vendor/cm/prebuilt/common/apps/Superuser.apk:system/app/Superuser.apk
+
+#Copy Googleapps for jonathan
+PRODUCT_COPY_FILES +=  \
+   vendor/cm/proprietary/gapps/apps/GoogleCalendarSyncAdapter.apk:system/app/GoogleCalendarSyncAdapter.apk \
+   vendor/cm/proprietary/gapps/apps/GoogleContactsSyncAdapter.apk:system/app/GoogleContactSyncAdapter.apk \
+   vendor/cm/proprietary/gapps/apps/GoogleLoginService.apk:system/app/GoogleLoginService.apk \
+   vendor/cm/proprietary/gapps/apps/GoogleServicesFramework.apk:system/app/GoogleServicesFramework.apk \
+   vendor/cm/proprietary/gapps/apps/LatinIMEDictionaryPack.apk:system/app/LatinIMEDictionaryPack.apk \
+   vendor/cm/proprietary/gapps/apps/NetworkLocation.apk:system/app/NetworkLocation.apk \
+   vendor/cm/proprietary/gapps/apps/Vending.apk:system/app/Vending.apk \
+   vendor/cm/proprietary/gapps/apps/SetupWizard.apk:system/app/SetupWizard.apk \
+   vendor/cm/proprietary/gapps/etc/com.google.android.maps.xml:system/etc/permissions/com.google.android.maps.xml \
+   vendor/cm/proprietary/gapps/etc/com.google.android.media.effects.xml:system/etc/permissions/com.google.android.media.effects.xml \
+   vendor/cm/proprietary/gapps/etc/com.google.widevine.software.drm.xml:system/etc/permissions/com.google.widevine.software.drm.xml \
+   vendor/cm/proprietary/gapps/etc/features.xml:system/etc/permissions/features.xml \
+   vendor/cm/proprietary/gapps/framework/com.google.android.maps.jar:system/framework/com.google.android.maps.jar \
+   vendor/cm/proprietary/gapps/framework/com.google.android.media.effects.jar:system/framework/com.google.android.media.effects.jar \
+   vendor/cm/proprietary/gapps/framework/com.google.widevine.software.drm.jar:system/framework/com.google.widevine.software.drm.jar
+
+#Copy Superuser binary for jonathan
+PRODUCT_COPY_FILES +=  \
+    vendor/cm/proprietary/superuser/su:system/xbin/su
 
 # Bring in camera effects
 PRODUCT_COPY_FILES +=  \
@@ -103,8 +125,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     HoloLauncherHD \
     FileManager \
-    LasVegasWynn \
-    WynnMDMService
+#    LasVegasWynn \
+#    WynnMDMService \
+    Superuser
 
 # Custom CM packages
 PRODUCT_PACKAGES += \

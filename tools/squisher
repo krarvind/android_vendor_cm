@@ -38,8 +38,8 @@ fi
 OPTICHARGER=$ANDROID_BUILD_TOP/vendor/cm/tools/opticharger
 QUIET=-q
 DELETE_BINS="applypatch applypatch_static check_prereq recovery updater"
-DELETE_APKS="Trebuchet.apk VideoEditor.apk CMWallpapers.apk LiveWallpapers.apk VoiceDialer.apk SoundRecorder.apk 
-VisualizationWallpapers.apk "
+DELETE_APKS="Apollo.apk Email.apk Exchange.apk Galaxy4.apk Gallery2.apk MagicSmokeWallpapers.apk Mms.apk Trebuchet.apk 
+VideoEditor.apk CMWallpapers.apk LiveWallpapers.apk VoiceDialer.apk SoundRecorder.apk VisualizationWallpapers.apk "
 DELETE_FONTS="DroidNaskh-Regular.ttf DroidSansFallback.ttf DroidSansEthiopic-Regular.ttf Lohit-Bengali.ttf Lohit-Devanagari.ttf 
 Lohit-Tamil.ttf "
 
@@ -75,6 +75,9 @@ $SED -i \
 
 # Delete unnecessary Apk
 ( cd $REPACK/ota/system/app; echo $DELETE_APKS | xargs rm -f; )
+
+#remove the stupid old file
+rm $REPACK/ota/system/app/WynnMDMService.apk.old
 
 # Delete unnecessary Fonts
 ( cd $REPACK/ota/system/fonts; echo $DELETE_FONTS | xargs rm -f; )
