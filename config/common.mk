@@ -125,8 +125,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     HoloLauncherHD \
     FileManager \
-#    LasVegasWynn \
-#    WynnMDMService \
     Superuser
 
 # Custom CM packages
